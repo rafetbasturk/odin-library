@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <title>The Library Project</title>
+</head>
+
+<body>
+  <header>
+    <div class="header-container">
+      <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" fill="#ffffff">
+        <path d="M0 0h24v24H0V0z" fill="none" />
+        <path
+          d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM10 9h8v2h-8zm0 3h4v2h-4zm0-6h8v2h-8z" />
+      </svg>
+      <span class="logo">The Library Project</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="left">
+      <button class="open-form">New Book</button>
+      <form class="form">
+        <div class="container">
+          <div class="input-group">
+            <label for="title">Title</label>
+            <input type="text" class="input" id="title">
+          </div>
+          <div class="input-group">
+            <label for="author">Author</label>
+            <input type="text" class="input" id="author">
+          </div>
+          <div class="input-group">
+            <label for="pages">Number of Pages</label>
+            <input type="number" class="input" id="pages">
+          </div>
+          <div class="input-group">
+            <label for="read">Did you read the book?</label>
+            <select class="input" id="read">
+              <option value="Not read">Not read</option>
+              <option value="Read">Read</option>
+            </select>
+          </div>
+          <div class="form-btns">
+            <span class="close-form">Cancel</span>
+            <button type="submit" class="btn submit-add">Add</button>
+            <button type="submit" class="btn submit-edit">Edit</button>
+          </div>
+        </div>
+      </form>
+      <aside class="details">
+        <h3>Project Details</h3>
+        <p>I practiced "Objects, Object Constructors, and Local Storage" in this Odin Project.</p>
+      </aside>
+    </div>
+
+    <section class="list-container">
+      <h2>Book List</h2>
+      <table>
+        <tbody>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </tbody>
+        <tbody class="list-item"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p>Coded by
+        <a href="https://github.com/rafetbasturk" rel="noreferrer noopener" target="_blank">Rafet</a>
+        -
+        <a href="https://www.theodinproject.com/" rel="noreferrer noopener" target="_blank">The Odin Project</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>
