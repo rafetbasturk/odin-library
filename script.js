@@ -7,7 +7,8 @@ const storageController = (() => {
       let library;
       if (localStorage.getItem("library") === null) {
         library = Library.getData().library
-      } else {
+      }
+      else {
         library = JSON.parse(localStorage.getItem("library"))
       }
       return library
@@ -131,10 +132,10 @@ const UIController = (() => {
 const Library = (() => {
   function Book(id, title, author, pages, isRead) {
     this.id = id,
-      this.title = title,
-      this.author = author,
-      this.pages = pages,
-      this.isRead = isRead
+    this.title = title,
+    this.author = author,
+    this.pages = pages,
+    this.isRead = isRead
   }
 
   Book.prototype.toggleStatus = function () {
@@ -216,7 +217,8 @@ const App = ((lib, ui, store) => {
       ui.closeForm()
       ui.showList()
       ui.removeNoBookWarning()
-    } else {
+    }
+    else {
       ui.showAlert("Please fill in the form!", "warning")
     }
   }
@@ -229,7 +231,8 @@ const App = ((lib, ui, store) => {
       if (store.loadLibrary().length !== 0) {
         ui.showList()
         ui.createLibraryList(library)
-      } else {
+      }
+      else {
         ui.hideList()
         ui.noBookWarning()
       }
@@ -249,7 +252,8 @@ const App = ((lib, ui, store) => {
         const library = store.loadLibrary().map(book => {
           if (book.id === updatedBook.id) {
             return book = updatedBook
-          } else {
+          }
+          else {
             return book
           }
         })
@@ -258,7 +262,8 @@ const App = ((lib, ui, store) => {
         ui.createLibraryList(library)
         ui.showAlert("Changes saved", "success")
         ui.closeForm()
-      } else {
+      }
+      else {
         ui.showAlert("You haven't changed any information", "warning")
       }
     }
@@ -297,7 +302,8 @@ const App = ((lib, ui, store) => {
       const el = e.target.classList.contains("dot") ? e.target.parentNode : e.target
       if (el.style.justifyContent === "") {
         el.style.justifyContent = "flex-end"
-      } else {
+      }
+      else {
         el.style.justifyContent = "flex-start"
       }
     }
@@ -320,7 +326,8 @@ const App = ((lib, ui, store) => {
       if (library.length !== 0) {
         ui.showList()
         ui.createLibraryList(library)
-      } else {
+      }
+      else {
         ui.hideList()
         ui.noBookWarning()
       }
