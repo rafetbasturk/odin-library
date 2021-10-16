@@ -40,7 +40,7 @@ const UIController = (() => {
             <td>${book.author}</td>
             <td>${book.pages}</td>
             <td class="read">
-              <div>${book.isRead}</div>
+              <div style="${book.isRead === "Read" ? "color: forestgreen" : "color: #C86464"}">${book.isRead}</div>
               <div class="toggle">
                 <div data-id=${book.id} class="dot-container">
                   <div data-id=${book.id} style="${book.isRead === "Read" ? "float: right; background: forestgreen" : "float: left; background: #C86464"}" class="dot"></div>
@@ -82,7 +82,7 @@ const UIController = (() => {
 
       setTimeout(() => {
         document.querySelector(".alert").remove();
-      }, 3000);
+      }, 1500);
     },
     hideList: () => {
       document.querySelector("table").style.display = "none"
@@ -90,7 +90,7 @@ const UIController = (() => {
     noBookWarning: () => {
       let html =
         `<div class="empty">
-          There is no book on the list. Click the "Add A New Book" button to add.
+          There is no book on the list. Click the "New Book" button to add.
         </div>`
       document.querySelector(selectors.listContainer).insertAdjacentHTML("beforeend", html)
     },
@@ -145,7 +145,7 @@ const Library = (() => {
   const data = {
     library: [],
     selectedBook: null,
-  } 
+  }
 
   data.library = [
     new Book(1, "A Game of Thrones", "George R. R. Martin", 694, "Read"),
@@ -242,20 +242,25 @@ const App = ((lib, ui, store) => {
     const { title, author, pages, isRead } = ui.getValues()
 
     if (title !== "" && author !== "" && isRead !== "") {
-      const updatedBook = lib.updateBook(title, author, pages, isRead)
+      const { title: selectedTitle, author: selectedAuthor, pages: selectedPages, isRead: selectedIsRead } = lib.getData().selectedBook
+      if (title !== selectedTitle || author !== selectedAuthor || pages !== selectedPages || isRead !== selectedIsRead) {
+        const updatedBook = lib.updateBook(title, author, pages, isRead)
 
-      const library = store.loadLibrary().map(book => {
-        if (book.id === updatedBook.id) {
-          return book = updatedBook
-        } else {
-          return book
-        }
-      })
+        const library = store.loadLibrary().map(book => {
+          if (book.id === updatedBook.id) {
+            return book = updatedBook
+          } else {
+            return book
+          }
+        })
 
-      store.storeLibrary(library)
-      ui.createLibraryList(library)
-      ui.showAlert("Changes saved", "success")
-      ui.closeForm()
+        store.storeLibrary(library)
+        ui.createLibraryList(library)
+        ui.showAlert("Changes saved", "success")
+        ui.closeForm()
+      } else {
+        ui.showAlert("You haven't changed any information", "warning")
+      }
     }
   }
 
@@ -287,9 +292,9 @@ const App = ((lib, ui, store) => {
       const id = e.target.dataset.id
       lib.changeStatus(id)
       ui.createLibraryList(store.loadLibrary())
+      ui.showAlert("Status changed", "success")
 
       const el = e.target.classList.contains("dot") ? e.target.parentNode : e.target
-      console.log(el.style.justifyContent === "");
       if (el.style.justifyContent === "") {
         el.style.justifyContent = "flex-end"
       } else {
