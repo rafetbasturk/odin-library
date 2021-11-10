@@ -130,18 +130,20 @@ const UIController = (() => {
 })()
 
 const Library = (() => {
-  function Book(id, title, author, pages, isRead) {
-    this.id = id,
-    this.title = title,
-    this.author = author,
-    this.pages = pages,
-    this.isRead = isRead
+  class Book {
+    constructor(id, title, author, pages, isRead) {
+      this.id = id,
+        this.title = title,
+        this.author = author,
+        this.pages = pages,
+        this.isRead = isRead;
+    }
+    toggleStatus() {
+      this.isRead === "Read" ? this.isRead = "Not read" : this.isRead = "Read";
+      return this.isRead;
+    }
   }
 
-  Book.prototype.toggleStatus = function () {
-    this.isRead === "Read" ? this.isRead = "Not read" : this.isRead = "Read"
-    return this.isRead;
-  }
 
   const data = {
     library: [],
