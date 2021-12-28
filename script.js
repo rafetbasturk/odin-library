@@ -91,12 +91,13 @@ const UIController = (() => {
     noBookWarning: () => {
       let html =
         `<div class="empty">
-          There is no book on the list. Click the "New Book" button to add.
+          There is no book on the list.
         </div>`
       document.querySelector(selectors.listContainer).insertAdjacentHTML("beforeend", html)
     },
     removeNoBookWarning: () => {
-      document.querySelector(selectors.listContainer).children[2].remove()
+      const element = document.querySelector(selectors.listContainer)
+      element.childElementCount === 3 ? element.children[2].remove() : null
     },
     showList: () => {
       document.querySelector("table").style.display = "block"
@@ -143,7 +144,6 @@ const Library = (() => {
       return this.isRead;
     }
   }
-
 
   const data = {
     library: [],
@@ -204,11 +204,32 @@ const Library = (() => {
 
 const App = ((lib, ui, store) => {
   const selectors = ui.getSelectors()
+  const form = document.querySelector("form")
 
-  const submitBook = e => {
-    e.preventDefault()
+  const submitBook = () => {
     const id = new Date().getTime()
     const { title, author, pages, isRead } = ui.getValues()
+
+    if (form.title.validity.valueMissing) {
+      form.title.setCustomValidity("Title cannot be empty!");
+    } else {
+      form.title.setCustomValidity("");
+    }
+    if (form.author.validity.valueMissing) {
+      form.author.setCustomValidity("Author cannot be empty!");
+    } else {
+      form.author.setCustomValidity("");
+    }
+    if (form.pages.validity.valueMissing) {
+      form.pages.setCustomValidity("Page number cannot be empty!");
+    } else {
+      form.pages.setCustomValidity("");
+    }
+    if (form.read.validity.valueMissing) {
+      form.read.setCustomValidity("An item should be selected!");
+    } else {
+      form.read.setCustomValidity("");
+    }
 
     if (title !== "" && author !== "" && isRead !== "") {
       const library = lib.addBookToLibrary(id, title, author, pages, isRead)
@@ -219,9 +240,10 @@ const App = ((lib, ui, store) => {
       ui.closeForm()
       ui.showList()
       ui.removeNoBookWarning()
-    }
-    else {
-      ui.showAlert("Please fill in the form!", "warning")
+      form.title.removeAttribute("required")
+      form.author.removeAttribute("required")
+      form.pages.removeAttribute("required")
+      form.read.removeAttribute("required")
     }
   }
 
@@ -243,10 +265,9 @@ const App = ((lib, ui, store) => {
   }
 
   const submitEdit = e => {
-    e.preventDefault()
     const { title, author, pages, isRead } = ui.getValues()
 
-    if (title !== "" && author !== "" && isRead !== "") {
+    if (title !== "" && author !== "" && isRead !== "" && pages !== "") {
       const { title: selectedTitle, author: selectedAuthor, pages: selectedPages, isRead: selectedIsRead } = lib.getData().selectedBook
       if (title !== selectedTitle || author !== selectedAuthor || pages !== selectedPages || isRead !== selectedIsRead) {
         const updatedBook = lib.updateBook(title, author, pages, isRead)
@@ -264,8 +285,13 @@ const App = ((lib, ui, store) => {
         ui.createLibraryList(library)
         ui.showAlert("Changes saved", "success")
         ui.closeForm()
+        form.title.removeAttribute("required")
+        form.author.removeAttribute("required")
+        form.pages.removeAttribute("required")
+        form.read.removeAttribute("required")
       }
       else {
+        e.preventDefault()
         ui.showAlert("You haven't changed any information", "warning")
       }
     }
@@ -285,6 +311,10 @@ const App = ((lib, ui, store) => {
   }
 
   const showForm = () => {
+    form.title.setAttribute("required", "")
+    form.author.setAttribute("required", "")
+    form.pages.setAttribute("required", "")
+    form.read.setAttribute("required", "")
     ui.addState()
     ui.clearForm()
     ui.openForm()

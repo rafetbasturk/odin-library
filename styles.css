@@ -98,8 +98,21 @@ main {
 
 .input {
   padding: .6rem;
-  border: 1px solid lightgray;
+  border: 2px solid #66a33db9;
   border-radius: .5rem;
+
+}
+
+.input:focus {
+  outline: transparent;
+}
+
+.input:invalid {
+  border: 2px solid #c864647c;
+}
+
+.input:valid {
+  background: #66a33d7c;
 }
 
 button {
@@ -116,6 +129,10 @@ button {
 label {
   color: goldenrod;
   margin-bottom: .2rem;
+}
+
+label::after {
+  content: " *";
 }
 
 .details {
@@ -164,7 +181,7 @@ td {
   border-bottom: 1px solid lightblue;
 }
 
-td:nth-of-type(4) {
+td:nth-of-type(3), td:nth-of-type(4) {
   text-align: center;
 }
 
