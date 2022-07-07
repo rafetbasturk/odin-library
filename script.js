@@ -206,7 +206,8 @@ const App = ((lib, ui, store) => {
   const selectors = ui.getSelectors()
   const form = document.querySelector("form")
 
-  const submitBook = () => {
+  const submitBook = (e) => {
+    e.preventDefault()
     const id = new Date().getTime()
     const { title, author, pages, isRead } = ui.getValues()
 
@@ -226,7 +227,7 @@ const App = ((lib, ui, store) => {
       form.pages.setCustomValidity("");
     }
     if (form.read.validity.valueMissing) {
-      form.read.setCustomValidity("An item should be selected!");
+      form.read.setCustomValidity("Please select read status.");
     } else {
       form.read.setCustomValidity("");
     }
@@ -265,6 +266,7 @@ const App = ((lib, ui, store) => {
   }
 
   const submitEdit = e => {
+    e.preventDefault()
     const { title, author, pages, isRead } = ui.getValues()
 
     if (title !== "" && author !== "" && isRead !== "" && pages !== "") {

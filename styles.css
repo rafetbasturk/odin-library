@@ -45,6 +45,7 @@ main {
 }
 
 .left {
+  min-width: 325px;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
